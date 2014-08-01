@@ -50,21 +50,21 @@ public enum JsonValue: Equatable, Hashable {
     }
 
 
-    var string: String? {
+    public var string: String? {
         switch self {
         case .JsonString(let value): return value
         default: return nil
         }
     }
 
-    var url: NSURL? {
+    public var url: NSURL? {
         switch self {
         case .JsonString(let value): return NSURL(string: value)
         default: return nil
         }
     }
 
-    var int: Int? {
+    public var int: Int? {
         switch self {
         case .JsonNumber(let value): return value.integerValue
         case .JsonString(let value): return value.bridgeToObjectiveC().integerValue
@@ -73,7 +73,7 @@ public enum JsonValue: Equatable, Hashable {
         }
     }
 
-    var bool: Bool? {
+    public var bool: Bool? {
         switch self {
         case .JsonBool(let value): return value
         case .JsonNumber(let value): return value.boolValue
@@ -81,7 +81,7 @@ public enum JsonValue: Equatable, Hashable {
         }
     }
 
-    var double: Double? {
+    public var double: Double? {
         switch self {
         case .JsonNumber(let value): return value.doubleValue
         case .JsonString(let value): return value.bridgeToObjectiveC().doubleValue
@@ -89,14 +89,14 @@ public enum JsonValue: Equatable, Hashable {
         }
     }
 
-    var array: [JsonValue]? {
+    public var array: [JsonValue]? {
         switch self {
         case .JsonArray(let value): return value
         default: return nil
         }
     }
 
-    var object: [String : JsonValue]? {
+    public var object: [String : JsonValue]? {
         switch self {
         case .JsonObject(let value): return value
         default: return nil
@@ -104,7 +104,7 @@ public enum JsonValue: Equatable, Hashable {
     }
 
 
-    subscript(key: String) -> JsonValue? {
+    public subscript(key: String) -> JsonValue? {
         switch self {
         case let .JsonObject(o):
             return o[key]
@@ -114,7 +114,7 @@ public enum JsonValue: Equatable, Hashable {
         }
     }
 
-    subscript(index: Int) -> JsonValue? {
+    public subscript(index: Int) -> JsonValue? {
         switch self {
         case let .JsonArray(a):
             return a[index]
