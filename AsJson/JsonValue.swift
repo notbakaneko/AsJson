@@ -73,6 +73,15 @@ public enum JsonValue: Equatable, Hashable {
         }
     }
 
+    public var uint: UInt? {
+        switch self {
+            case .JsonNumber(let value): return value.unsignedLongValue
+            case .JsonString(let value): return UInt(value.bridgeToObjectiveC().integerValue)
+            case .JsonBool(let value): return UInt(value)
+            default: return nil
+        }
+    }
+
     public var bool: Bool? {
         switch self {
         case .JsonBool(let value): return value
