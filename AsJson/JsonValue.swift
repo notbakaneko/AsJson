@@ -15,7 +15,7 @@ public enum JsonValue: Equatable, Hashable {
     case JsonNull
     case JsonInvalid(NSError)
 
-    init(_ rawValue: AnyObject) {
+    public init(_ rawValue: AnyObject) {
         switch rawValue {
         case let raw as NSNull:
             self = .JsonNull
@@ -29,7 +29,7 @@ public enum JsonValue: Equatable, Hashable {
         case let raw as NSArray:
             var array = [JsonValue]()
             for item in raw {
-                array += JsonValue(item)
+                array.append(JsonValue(item))
             }
             self = .JsonArray(array)
 
@@ -67,7 +67,7 @@ public enum JsonValue: Equatable, Hashable {
     public var int: Int? {
         switch self {
         case .JsonNumber(let value): return value.integerValue
-        case .JsonString(let value): return value.bridgeToObjectiveC().integerValue
+        case .JsonString(let value): return ((value as NSString).integerValue)
         case .JsonBool(let value): return Int(value)
         default: return nil
         }
@@ -76,7 +76,7 @@ public enum JsonValue: Equatable, Hashable {
     public var uint: UInt? {
         switch self {
             case .JsonNumber(let value): return value.unsignedLongValue
-            case .JsonString(let value): return UInt(value.bridgeToObjectiveC().integerValue)
+            case .JsonString(let value): return UInt((value as NSString).integerValue)
             case .JsonBool(let value): return UInt(value)
             default: return nil
         }
@@ -93,7 +93,7 @@ public enum JsonValue: Equatable, Hashable {
     public var double: Double? {
         switch self {
         case .JsonNumber(let value): return value.doubleValue
-        case .JsonString(let value): return value.bridgeToObjectiveC().doubleValue
+        case .JsonString(let value): return ((value as NSString).doubleValue)
         default: return nil
         }
     }
